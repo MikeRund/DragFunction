@@ -44,12 +44,12 @@ public class PolygonTest {
     @Test
     public void testCalculateLinePoints() {
         // Create test polygon
-        Coord[] verticies = {
+        Coord[] vertices = {
                 new Coord(0,0),
                 new Coord(1,0),
                 new Coord(0,1)
         };
-        Polygon triangle = new Polygon(verticies);
+        Polygon triangle = new Polygon(vertices);
         ArrayList<Coord> points = triangle.getPoints();
 
         // Define expected points

@@ -25,12 +25,12 @@ public class Main {
 //        }
 
         // Point test
-        Coord[] verticies = {
+        Coord[] vertices = {
                 new Coord(0,0),
                 new Coord(1,0),
                 new Coord(0,1)
         };
-        Polygon triangle = new Polygon(verticies);
+        Polygon triangle = new Polygon(vertices);
         ArrayList<Coord> points = triangle.getPoints();
         for (Coord point : points){
             System.out.println(point.getX() + " , " + point.getY());

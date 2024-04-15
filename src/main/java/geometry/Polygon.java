@@ -3,19 +3,19 @@ package geometry;
 import java.util.ArrayList;
 
 public class Polygon {
-    private Coord[] verticies;
+    private Coord[] vertices;
     private ArrayList<Coord> midpoints;
     private ArrayList<Coord> points;
 
 
-    public Polygon(Coord[] verticies) {
-        this.verticies = verticies;
+    public Polygon(Coord[] vertices) {
+        this.vertices = vertices;
         this.midpoints = calculateMidpoints();
         this.points = calculateLinePoints();
     }
 
-    public Coord[] getVerticies() {
-        return verticies;
+    public Coord[] getvertices() {
+        return vertices;
     }
 
     public ArrayList<Coord> getMidpoints() {
@@ -26,18 +26,18 @@ public class Polygon {
         return points;
     }
 
-    // Method to generate a list of all midpoints between verticies of a shape
+    // Method to generate a list of all midpoints between vertices of a shape
     private ArrayList<Coord> calculateMidpoints() {
         ArrayList<Coord> midpoints = new ArrayList<>();
         Coord coordA;
         Coord coordB;
-        for(int i = 0; i <= verticies.length - 1; i++) {
-            coordA = verticies[i];
+        for(int i = 0; i <= vertices.length - 1; i++) {
+            coordA = vertices[i];
 
-            if (i == verticies.length - 1) {
-                coordB = verticies[0]; // Length from the last vertex to the first
+            if (i == vertices.length - 1) {
+                coordB = vertices[0]; // Length from the last vertex to the first
             } else {
-                coordB = verticies[i + 1];
+                coordB = vertices[i + 1];
             }
             double midpointX = (coordA.getX() + coordB.getX()) / 2;
             double midpointY = (coordA.getY() + coordB.getY()) / 2;
@@ -46,12 +46,12 @@ public class Polygon {
         return midpoints;
     }
 
-    // Method to generate 10 evenly spaced points between verticies
+    // Method to generate evenly spaced points between vertices
     private ArrayList<Coord> calculateLinePoints() {
         ArrayList<Coord> points = new ArrayList<>();
-        for (int i = 0; i < verticies.length; i++) {
-            Coord coordA = verticies[i];
-            Coord coordB = verticies[(i + 1) % verticies.length];
+        for (int i = 0; i < vertices.length; i++) {
+            Coord coordA = vertices[i];
+            Coord coordB = vertices[(i + 1) % vertices.length];
             double deltaX = coordB.getX() - coordA.getX();
             double deltaY = coordB.getY() - coordA.getY();
 
