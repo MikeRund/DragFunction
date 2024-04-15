@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.util.ArrayList;
 
+// Class that tests the methods in Polygon
 public class PolygonTest {
 
     @Test

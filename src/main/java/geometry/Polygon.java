@@ -2,6 +2,9 @@ package geometry;
 
 import java.util.ArrayList;
 
+// Class that creates a Polygon object from a list of vertices (array of Coord objects)
+// Calculates and stores list of midpoints and equally spaced points from the list of vertices
+// Will allow later methods to calculate the closest vertex / midpoint / point much easier
 public class Polygon {
     private Coord[] vertices;
     private ArrayList<Coord> midpoints;
@@ -10,8 +13,8 @@ public class Polygon {
 
     public Polygon(Coord[] vertices) {
         this.vertices = vertices;
-        this.midpoints = calculateMidpoints();
-        this.points = calculateLinePoints();
+        this.midpoints = calculateMidpoints(); // Initialize list of midpoints with generated list form vertices
+        this.points = calculateLinePoints(); // Initialize list of points with generated equally spaced points from list of vertices
     }
 
     public Coord[] getvertices() {
@@ -39,6 +42,8 @@ public class Polygon {
             } else {
                 coordB = vertices[i + 1];
             }
+
+            // Formula to calculate midpoint of a line with two known points
             double midpointX = (coordA.getX() + coordB.getX()) / 2;
             double midpointY = (coordA.getY() + coordB.getY()) / 2;
             midpoints.add(new Coord(midpointX, midpointY));
@@ -55,7 +60,7 @@ public class Polygon {
             double deltaX = coordB.getX() - coordA.getX();
             double deltaY = coordB.getY() - coordA.getY();
 
-            // Linear interpolation to calculate equally spaced points
+            // Linear interpolation formula to calculate equally spaced points between two known points
             for (int j = 1; j < 10; j++) {
                 double t = (double) j / 10;
                 double pointX = coordA.getX() + t * deltaX;

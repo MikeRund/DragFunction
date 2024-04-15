@@ -6,10 +6,11 @@ import model.PointData;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+// Class to test each method of GeometryUtil
 public class GeometryUtilTest {
 
     @Test
-    public void calculateDistanceTest() {
+    public void testCalculateDistance() {
         // Create test cases for calculateDistance method
         Coord coordA1 = new Coord(3, 4);
         Coord coordB1 = new Coord(0,0);
@@ -24,7 +25,7 @@ public class GeometryUtilTest {
         assertEquals(expectedDistance, calculatedDistance2, "Size do not match");
     }
     @Test
-    public void calculateClosestVertexTest() {
+    public void testCalculateClosestVertex() {
         // Test cases for calculateClosestVertex method
         Coord[] verticesA1 = {
                 new Coord(0, 0),
@@ -140,15 +141,6 @@ public class GeometryUtilTest {
         assertEquals(expected2.getDistance(), actual2.getDistance(), 0.005, "Point distance fail: Case 2");
         System.out.println("Expected2: " + expected2 +  ", Actual2: " + actual2);
     }
-
-//        double expectedDistance2 = Math.sqrt(2);
-//        double calculatedDistance1 = GeometryUtil.calculateClosestPoint(shapeA, shapeB1);
-//        double calculatedDistance2 = GeometryUtil.calculateClosestPoint(shapeA, shapeB2);
-//        // Assert expected closest distance with calculated closest distance
-//        assertEquals(expectedDistance1, calculatedDistance1, 0.005, "Point distance fail: Case 1");
-//        assertEquals(expectedDistance2, calculatedDistance2, 0.005, "Point distance fail: Case 2");
-
-
     @Test
     public void testCalculateSnapped() {
         // Shared verticesB test case

@@ -1,5 +1,7 @@
 package geometry;
 
+// Class to store co-ordinates as an object
+// Will allow creation of Polygon object, and easy handling of closest point
 public class Coord {
     private final double x;
     private final double y;

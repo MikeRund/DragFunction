@@ -2,6 +2,7 @@ package model;
 
 import geometry.Coord;
 
+// Class to contain all information required for dragMove() function output
 public class SnapResult {
     private Coord[] verticesBSnapped;
     private boolean isSnapped;

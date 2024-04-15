@@ -2,6 +2,8 @@ package model;
 
 import geometry.Coord;
 
+// Class that stores 2 points and the distance between them
+// Used to build a result in SnapResult class  --> Used to format result for dragMove() function
 public class PointData {
     private final Coord pointA;
     private final Coord pointB;

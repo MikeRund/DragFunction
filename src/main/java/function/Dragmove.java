@@ -5,85 +5,46 @@ import geometry.Polygon;
 import model.PointData;
 import model.SnapResult;
 import util.GeometryUtil;
+import util.ResultBuilder;
 
 public class Dragmove {
     static final double VERTEX_SNAP = 20;
     static final double MIDPOINT_SNAP = 15;
     static final double POINT_SNAP = 10;
-    public static SnapResult dragmove(Coord[] verticesA, Coord[] verticesB){
+    public static SnapResult dragMove(Coord[] verticesA, Coord[] verticesB){
+
+        // Initialize snap result, snap details and parse the vertices into the Polygon constructor
         SnapResult result = new SnapResult(verticesB);
         String snapDetails = "";
         Polygon shapeA = new Polygon(verticesA);
         Polygon shapeB = new Polygon(verticesB);
 
+        // Check if any vertex of A is within 20 points to any vertex of B
         if (GeometryUtil.calculateClosestVertex(shapeA, shapeB).getDistance() <= VERTEX_SNAP) {
 
-            // Store snap information in PointData object
             PointData pointData = GeometryUtil.calculateClosestVertex(shapeA, shapeB);
-            Coord vertexA = pointData.getPointA(); // Vertex of A that activated the snap
-            Coord vertexB = pointData.getPointB(); // Vertex of B that activated the snap
-            double snapDistance = pointData.getDistance();
-
-            // Build snap details:
-            snapDetails += "Vertex to vertex snap occurred." + "\n";
-            snapDetails += "Vertex of B: " + vertexB + "\n";
-            snapDetails += "Snapped to vertex of A: " + vertexA + "\n";
-            snapDetails += "Snap distance: " + snapDistance + ".";
-
-            // Build snap result
-            // Parse start co-ord (vertexB) and snapped co-ord (vertexA) to calculateSnapped() method to obtain snapped vertices of B
-            result.setVerticesBSnapped(GeometryUtil.calculateSnapped(vertexB, vertexA, verticesB));
-            result.setSnapped(true);
-            result.setSnapDetails(snapDetails);
-
-            return result;
+            return ResultBuilder.buildResult(pointData, result, "vertex", verticesB);
         }
+
+        // Check if any midpoint of A is within 15 points to any vertex of B
         else if (GeometryUtil.calculateClosestMidpoint(shapeA, shapeB).getDistance() <= MIDPOINT_SNAP){
 
-            // Store snap information in PointData object
             PointData pointData = GeometryUtil.calculateClosestMidpoint(shapeA, shapeB);
-            Coord midpoint = pointData.getPointA(); // Midpoint of A that activated the snap
-            Coord vertexB = pointData.getPointB(); // Vertex of B that activated the snap
-            double snapDistance = pointData.getDistance();
-
-            // Build snap details:
-            snapDetails += "Vertex to midpoint snap occurred." + "\n";
-            snapDetails += "Vertex of B: " + vertexB + "\n";
-            snapDetails += "Snapped to midpoint of A: " + midpoint + "\n";
-            snapDetails += "Snap distance: " + snapDistance + ".";
-
-            // Build snap result
-            // Parse start co-ord (vertexB) and snapped co-ord (midpoint) to calculateSnapped() method to obtain snapped vertices of B
-            result.setVerticesBSnapped(GeometryUtil.calculateSnapped(vertexB, midpoint, verticesB));
-            result.setSnapped(true);
-            result.setSnapDetails(snapDetails);
-
-            return result;
+            return ResultBuilder.buildResult(pointData, result, "midpoint", verticesB);
         }
+
+        // Check if any point of A is within 10 points to any vertex of B
         else if (GeometryUtil.calculateClosestPoint(shapeA, shapeB).getDistance() <= POINT_SNAP){
 
-            // Store snap information in PointData object
             PointData pointData = GeometryUtil.calculateClosestPoint(shapeA, shapeB);
-            Coord point = pointData.getPointA(); // Line point of A that activated the snap
-            Coord vertexB = pointData.getPointB(); // Vertex of B that activated the snap
-            double snapDistance = pointData.getDistance();
-
-            // Build snap details:
-            snapDetails += "Vertex to line point snap occurred." + "\n";
-            snapDetails += "Vertex of B: " + vertexB + "\n";
-            snapDetails += "Snapped to midpoint of A: " + point + "\n";
-            snapDetails += "Snap distance: " + snapDistance + ".";
-
-            // Build snap result
-            // Parse start co-ord (vertexB) and snapped co-ord (point) to calculateSnapped() method to obtain snapped vertices of B
-            result.setVerticesBSnapped(GeometryUtil.calculateSnapped(vertexB, point, verticesB));
-            result.setSnapped(true);
-            result.setSnapDetails(snapDetails);
-
-            return result;
+            return ResultBuilder.buildResult(pointData, result, "point", verticesB);
         }
+
+        // No distance criteria met
         else {
-            result.setSnapDetails("No snap occurred");
+            snapDetails += "No snap occurred";
+            result.setSnapDetails(snapDetails);
+            System.out.println(snapDetails);
             return result;
         }
     }
