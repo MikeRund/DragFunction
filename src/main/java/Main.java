@@ -1,8 +1,5 @@
-import function.Dragmove;
+import function.DragMove;
 import geometry.Coord;
-import geometry.Polygon;
-
-import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
@@ -34,6 +31,6 @@ public class Main {
 //                new Coord(70, 70)
 //        };
 
-        Dragmove.dragMove(verticesA, verticesB);
+        DragMove.dragMove(verticesA, verticesB);
     }
 }

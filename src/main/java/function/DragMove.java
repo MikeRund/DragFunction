@@ -7,7 +7,7 @@ import model.SnapResult;
 import util.GeometryUtil;
 import util.ResultBuilder;
 
-public class Dragmove {
+public class DragMove {
     static final double VERTEX_SNAP = 20;
     static final double MIDPOINT_SNAP = 15;
     static final double POINT_SNAP = 10;
