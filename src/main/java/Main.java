@@ -10,27 +10,35 @@ public class Main {
                 new Coord(100, 100),
                 new Coord(-100, 100)
         };
-        Coord[] verticesB = {
-                new Coord(0, -14),
-                new Coord(5, -16),
-                new Coord(-5, 16)
+        Coord[] verticesB_vertexEx = {
+                new Coord(90, 0),
+                new Coord(20,20),
+                new Coord(30,30)
         };
-//        Coord[] verticesB = {
-//                new Coord(20,20),
-//                new Coord(21,21),
-//                new Coord(22,22)
-//        };
-//        Coord[] verticesB = {
-//                new Coord(15, -5),
-//                new Coord(5, -16),
-//                new Coord(-5, 16)
-//        };
-//        Coord[] verticesB = {
-//                new Coord(99, 99),
-//                new Coord(80, 80),
-//                new Coord(70, 70)
-//        };
+        Coord[] verticesB_midpointEx = {
+                new Coord(10,0),
+                new Coord(20,20),
+                new Coord(30,30)
+        };
+        Coord[] verticesB_pointEx = {
+                new Coord(60,0),
+                new Coord(20,20),
+                new Coord(30,30)
+        };
+        Coord[] verticesB_noSNap = {
+                new Coord(20,20),
+                new Coord(21,21),
+                new Coord(22,22)
+        };
 
-        DragMove.dragMove(verticesA, verticesB);
+        System.out.println("Vertex snap example:");
+        System.out.println(DragMove.dragMove(verticesA, verticesB_vertexEx) + "\n");
+        System.out.println("Midpoint snap example:");
+        System.out.println(DragMove.dragMove(verticesA, verticesB_midpointEx)  + "\n");
+        System.out.println("Point snap example:");
+        System.out.println(DragMove.dragMove(verticesA, verticesB_pointEx)  + "\n");
+        System.out.println("No snap example:");
+        System.out.println(DragMove.dragMove(verticesA, verticesB_noSNap)  + "\n");
+
     }
 }
