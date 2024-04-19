@@ -11,7 +11,6 @@ public class SnapResult {
     public SnapResult(Coord[] verticesB) {
         this.verticesBSnapped = verticesB;
         isSnapped = false;
-        this.snapDetails = "No snap";
     }
 
     public void setVerticesBSnapped(Coord[] verticesBSnapped) {
