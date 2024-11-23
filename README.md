@@ -1,10 +1,15 @@
-README
+# README
 
 This file will cover the thinking behind the approach taken, a high-level overview, decisions made,
 and ideas to optimize for speed.
 
 *********************************************************************************************************
-VIEWING ORDER 
+## PROBLEM
+This repo implements the solution to the following problem set:
+
+![image](https://github.com/user-attachments/assets/4b00d8f9-66a3-49f9-969c-4d198b7cdb6e)
+
+## VIEWING ORDER 
 
 The best order for first viewing this project, showcasing the logic flow and implementation steps, is as follows 
 
@@ -24,7 +29,7 @@ The best order for first viewing this project, showcasing the logic flow and imp
 
 *********************************************************************************************************
 
-HIGH-LEVEL OVERVIEW
+## HIGH-LEVEL OVERVIEW
 
 Functionality was split into relevant packages. The basis of the code is the Coord, Polygon and GeometryUtil classes.
 
@@ -48,7 +53,7 @@ the new snapped vertices of B utilizing the calculatedSnapped() method in Geomet
 The main method only served as a way to run some dummy data, and showcases each condition of the algorithm activating.
 *********************************************************************************************************
 
-APPROACH REASONING
+## APPROACH REASONING
 
 Looking at the problem, I initially broke the required functionality down into bite-sized chunks that I could code
 the solution for. For example, in order to check if a vertex of A was within 20 points of a vertex of B, this was how
@@ -92,7 +97,7 @@ repeated in each if-elif block. Moving this boilerplate code to a class to gener
 only difference in the code (whether the snap was a vertex / midpoint / point) could be parsed in as a String.
 
 *********************************************************************************************************
-SPEED-OPTIMIZATION RECOMMENDATIONS
+## SPEED-OPTIMIZATION RECOMMENDATIONS
 
 An obvious cause of speed issues in this code is the inclusion of nested-loops, specifically when calculating closest  
 points. One workaround would be to not actually calculate the distance between all vertices / midpoints 
