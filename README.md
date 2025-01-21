@@ -1,9 +1,8 @@
-# README
+# Drag Move
 
 This file will cover the thinking behind the approach taken, a high-level overview, decisions made,
 and ideas to optimize for speed.
 
-*********************************************************************************************************
 ## PROBLEM
 This repo implements the solution to the following problem set:
 
@@ -27,7 +26,6 @@ The best order for first viewing this project, showcasing the logic flow and imp
 
 
 
-*********************************************************************************************************
 
 ## HIGH-LEVEL OVERVIEW
 

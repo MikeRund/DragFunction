@@ -12,6 +12,7 @@ public class DragMove {
     private static final double MIDPOINT_SNAP = 15;
     private static final double POINT_SNAP = 10;
     private static final String NO_SNAP = "No snap occurred";
+
     public static SnapResult dragMove(Coord[] verticesA, Coord[] verticesB){
 
         // Initialize snap result, snap details and parse the vertices into the Polygon constructor
