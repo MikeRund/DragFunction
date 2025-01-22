@@ -183,13 +183,13 @@ could be *parsed* in as a String.
 
 # Dissecting the Code 
 
-The full understand how this solution works lets now dive into some of the more
+To fully understand how this solution works lets now dive into some of the more
 complex logic 🔎. 
 
 ## The `Polygon` Class 
 
 The `Polygon` class allows the storage of a list of vertices which make up 
-our requires **shapes** that we will need when using the algorithm.
+our required **shapes** that we will need when using the algorithm.
 
 It also encapsulates the logic for generating a list of **midpoints** 
 and **equally spaced points** between each vertex of the *shape*. 
@@ -223,7 +223,7 @@ for(int i = 0; i <= vertices.length - 1; i++) {
 return midpoints;
 ```
 > Note: When the final point co-ordinate is reached the midpoint is 
-> calculated from the *first* to the *last* vertices
+> calculated from the *first* to the *last* vertex
 
 ### The `calculateLinePoints()` Method
 
