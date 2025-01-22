@@ -4,7 +4,7 @@ Hello! 👋
 
 This project is my solution to following problem:
 
-![image](https://github.com/user-attachments/assets/4b00d8f9-66a3-49f9-969c-4d198b7cdb6e)
+![image not found](image-1.png)
 
 Coming from a Mathematics background, 
 I take great pleasure in solving complex problems 🔢
@@ -13,10 +13,16 @@ This "snapping" algorithm gave me the opportunity of applying my
 programming and reasoning to a real use-case. 
 
 I will provide details on how I analyzed and broke down the problem,
-an overview on how this solution works, a breakdown of the code and test,
+an overview on how this solution works, a breakdown of the code and tests,
 and finally some further optimization techniques. 
 
-# VIEWING ORDER 
+# Specification
+
+## Requirements  
+
+## Assumptions 
+
+# Code Review Steps
 
 The best order for first viewing this project, showcasing the logic flow 
 and implementation steps, is as follows 
@@ -173,6 +179,210 @@ of the code for the dragMove function was *repeated* in each if-elif block. 💩
 Moving this *boilerplate* code to a class to **generate** this each time was 
 simple as the only difference in the code (whether the snap was a vertex / midpoint / point) 
 could be *parsed* in as a String.
+
+
+# Dissecting the Code 
+
+The full understand how this solution works lets now dive into some of the more
+complex logic 🔎. 
+
+## The `Polygon` Class 
+
+The `Polygon` class allows the storage of a list of vertices which make up 
+our requires **shapes** that we will need when using the algorithm.
+
+It also encapsulates the logic for generating a list of **midpoints** 
+and **equally spaced points** between each vertex of the *shape*. 
+
+This is of course necessary to perform the 'snapping' condition checks,
+and is neatly stored in instances of this `Polygon` class. 
+
+### The `calculateMidpoints()` Method
+
+This method calculates the midpoint between every one of the `Polygon` 
+instances vertex. 
+
+It iteratively loops through each point and applies the midpoint
+formula to the *current* and *next* vertex.
+
+```java
+for(int i = 0; i <= vertices.length - 1; i++) {
+  coordA = vertices[i];
+
+  if (i == vertices.length - 1) {
+      coordB = vertices[0]; // Length from the last vertex to the first
+  } else {
+      coordB = vertices[i + 1];
+  }
+
+  // Formula to calculate midpoint of a line with two known points
+  double midpointX = (coordA.getX() + coordB.getX()) / 2;
+  double midpointY = (coordA.getY() + coordB.getY()) / 2;
+  midpoints.add(new Coord(midpointX, midpointY));
+}
+return midpoints;
+```
+> Note: When the final point co-ordinate is reached the midpoint is 
+> calculated from the *first* to the *last* vertices
+
+### The `calculateLinePoints()` Method
+
+Utilizing the **linear interpolation formula** this method
+generates equally spaced points along each of the vertices 
+of our `Polygon` instance. 
+
+Again, this is required when calculating the **snapping*
+algorithm. 
+
+By essentially calculating changes in **x** and **y** 
+and applying the fraction **t**, we obtain our points. 
+
+```java
+for (int i = 0; i < vertices.length; i++) {
+    Coord coordA = vertices[i];
+    Coord coordB = vertices[(i + 1) % vertices.length];
+    double deltaX = coordB.getX() - coordA.getX();
+    double deltaY = coordB.getY() - coordA.getY();
+
+    // Linear interpolation formula to calculate equally spaced points between two known points
+    for (int j = 1; j < 10; j++) {
+        double t = (double) j / 10;
+        double pointX = coordA.getX() + t * deltaX;
+        double pointY = coordA.getY() + t * deltaY;
+        points.add(new Coord(pointX, pointY));
+    }
+}
+return points;
+    
+```
+
+## The `PointData` Class
+
+As explained in the **Approach Reasoning**, instances of this 
+class act as a way to store two vertices (or instances of `Coord`)
+as well as the **distance** between them. 
+
+This is highly useful for the implementation of the *methods* in the 
+`GeometryUtil` class.
+
+## The `GeometryUtil` Class
+
+This class contains the **foundations** of logic which allow 
+the algorithm to run 🏃‍♂️.
+
+In order for the **snapping** algorithm to be able determine
+if a certain vertex / midpoint / point on line is close enough
+to activate a **snapping** condition, we will require methods to be handle 
+calculating distances for each circumstance. 
+
+Enter, the `GeometryUtil` class. 
+
+### The `calculateClosest..()` methods
+
+This class contains **three**  methods which require distances 
+to be calculated. This logic is handled by a simple helper function
+
+```java
+calculateDistance(Coord coordA, Coord coordB) {..}
+```
+which uses the simple 
+[mathematic formula](https://www.mathsisfun.com/algebra/distance-2-points.html)
+. 
+
+This then makes the implementation **simple** for finding the closest
+vertex / midpoint / point on line between `shapeA` and `shapeB`, as we 
+can loop through the required type of coordinates and store the smallest 
+distances and corresponding vertices in a `PointData` instance.
+
+For example, searching for the closest midpoint is as so:
+
+```java
+ // Check distance of every midpoint of A with every vertex of B
+for (Coord mid : shapeA.getMidpoints()) {
+    for (Coord vertex : shapeB.getvertices()) {
+        distance = calculateDistance(mid, vertex);
+
+        // Store the midpoint of A and vertex of B, and the distance between them
+        if (distance < minDist) {
+            minDist = distance;
+            minMidpoint = mid;
+            minVertexB = vertex;
+        }
+    }
+}
+// Use points and distance to create new PointData object
+return new PointData(minMidpoint, minVertexB, minDist);
+```
+
+### The `calculateSnapped(..)` method
+
+The final method in this util class generates the new 
+list of coordinates of `shapeB` if **snapping** occurs, 
+which is one of the conditions in the spec. 
+
+This is handled quite easily by determining the change 
+in *X* and *Y* from a coordinate pre and post 'snap', 
+and then applying that to the remaining vertices. 
+
+```java 
+// Calculate change in x and y-axis
+double deltaX = snapped.getX() - start.getX();
+double deltaY = snapped.getY() - start.getY();
+Coord[] verticesBSnapped = new Coord[verticesB.length];
+
+// Add new co-ord after each change in x & y-axis
+for (int i = 0; i < verticesBSnapped.length; i++) {
+    double x = verticesB[i].getX() + deltaX;
+    double y = verticesB[i].getY() + deltaY;
+    verticesBSnapped[i] = new Coord(x, y);
+}
+return verticesBSnapped;
+```
+
+## The `DragMove()` class
+
+With all the necessary logic required to perform the condition 
+checks already handled by previous functions and classes, 
+the actual implementation of the *snapping algorithm* is 
+**very simple**.
+
+As mentioned in the **High-Level Overview**, a simple 
+`if-else` block moves through each condition based on 
+order of priority until a snapping condition is met 
+or it is determined that none apply. 
+
+```java
+if (GeometryUtil.calculateClosestVertex(shapeA, shapeB).getDistance() <= VERTEX_SNAP) {
+
+    PointData pointData = GeometryUtil.calculateClosestVertex(shapeA, shapeB);
+    return ResultBuilder.buildResult(pointData, result, "vertex", verticesB);
+}
+
+// Check if any midpoint of A is within 15 points to any vertex of B
+else if (GeometryUtil.calculateClosestMidpoint(shapeA, shapeB).getDistance() <= MIDPOINT_SNAP){
+
+    PointData pointData = GeometryUtil.calculateClosestMidpoint(shapeA, shapeB);
+    return ResultBuilder.buildResult(pointData, result, "midpoint", verticesB);
+}
+
+// Check if any point of A is within 10 points to any vertex of B
+else if (GeometryUtil.calculateClosestPoint(shapeA, shapeB).getDistance() <= POINT_SNAP){
+
+    PointData pointData = GeometryUtil.calculateClosestPoint(shapeA, shapeB);
+    return ResultBuilder.buildResult(pointData, result, "point", verticesB);
+}
+
+// No distance criteria met
+else {
+    snapDetails += NO_SNAP;
+    result.setSnapDetails(snapDetails);
+    System.out.println(snapDetails);
+    return result;
+}
+```
+
+We are also making use of the `ResultBuilder` class, which combined with the 
+`SnapResult` class makes handling the data of a snapped shape efficient. 
 
 # SPEED-OPTIMIZATION RECOMMENDATIONS
 

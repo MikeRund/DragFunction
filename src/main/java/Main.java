@@ -34,10 +34,13 @@ public class Main {
 
         System.out.println("Vertex snap example:");
         System.out.println(DragMove.dragMove(verticesA, verticesB_vertexEx) + "\n");
+
         System.out.println("Midpoint snap example:");
         System.out.println(DragMove.dragMove(verticesA, verticesB_midpointEx)  + "\n");
+
         System.out.println("Point snap example:");
         System.out.println(DragMove.dragMove(verticesA, verticesB_pointEx)  + "\n");
+        
         System.out.println("No snap example:");
         System.out.println(DragMove.dragMove(verticesA, verticesB_noSNap)  + "\n");
 

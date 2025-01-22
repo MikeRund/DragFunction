@@ -13,7 +13,7 @@ public class Polygon {
 
     public Polygon(Coord[] vertices) {
         this.vertices = vertices;
-        this.midpoints = calculateMidpoints(); // Initialize list of midpoints with generated list form vertices
+        this.midpoints = calculateMidpoints(); // Initialize list of midpoints with generated list from vertices
         this.points = calculateLinePoints(); // Initialize list of points with generated equally spaced points from list of vertices
     }
 
@@ -34,6 +34,7 @@ public class Polygon {
         ArrayList<Coord> midpoints = new ArrayList<>();
         Coord coordA;
         Coord coordB;
+
         for(int i = 0; i <= vertices.length - 1; i++) {
             coordA = vertices[i];
 
@@ -54,6 +55,7 @@ public class Polygon {
     // Method to generate evenly spaced points between vertices
     private ArrayList<Coord> calculateLinePoints() {
         ArrayList<Coord> points = new ArrayList<>();
+        
         for (int i = 0; i < vertices.length; i++) {
             Coord coordA = vertices[i];
             Coord coordB = vertices[(i + 1) % vertices.length];
