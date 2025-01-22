@@ -18,9 +18,27 @@ and finally some further optimization techniques.
 
 # Specification
 
-## Requirements  
+The problem is defined as such (and illustrated above):
 
-## Assumptions 
+**We have two polygons. One (A) is fixed in position, the other (B) 
+is draggable by a user on the screen. 
+A function is fired every time we detect that B has moved.**
+
+The problem set came with the following requirements and assumptions 
+
+1. Pass in a list of vertices for both shapes into the final function
+  > It can be assumed that the vertices are in order around the edge of the shape
+
+2. Solution must return 
+  - **verticesBSnapped** - same structure as verticesB. Will be identical to 
+  verticesB if no snap has occurred.
+  - **isSnapped** - true or false
+  - **snapDetails** - if applicable, this is some information on the snap, 
+  such as which vertices or lines are involved, which rule was matched, 
+  and what the snap distance was.
+
+3. Speed optimization need not be taken into account besides suggestions for 
+doing so in a production environment. 
 
 # Code Review Steps
 
